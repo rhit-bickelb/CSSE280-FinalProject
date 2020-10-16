@@ -7,17 +7,90 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
   <link rel="stylesheet" href="styles/main.css">
-  <title>App Name</title>
+  <title>LED controller</title>
 </head>
 
 <body>
   <nav class="navbar navbar-dark fixed-top">
-    <a class="navbar-brand" href="#">App Name</a>
+    <a class="navbar-brand" href="#">LED Controller</a>
   </nav>
   <div id="mainPage" class="container page-container">
 
+    
+      <div class="form-group"> 
+        <label for="usernameInput" class="bmd-label-floating">Username</label>
+        <input type="text" class="form-control" id="usernameInput">
+      </div>
+      <div class="form-group bmd-form-group"> <!-- manually specified --> 
+        <label for="passwordInput" class="bmd-label-floating">Password</label>
+        <input type="text" class="form-control" id="passwordInput">
+      </div>
+
+      <div class = "buttonsPage1"> 
+      <button class="btn btn-primary " id="loginButton" type="submit">Login</button>
+     </div>
+     <div class = "buttonsPage1">
+      <button class="btn btn-primary" id="signUpButton" data-toggle="modal" data-target="#signUpDialog" type="submit">Sign Up</button>
+    </div>
+
+    <div>
+      <button class="btn btn-primary" id="aboutUsButton"  data-toggle="modal" data-target="#aboutUsDialog" type="submit">About Us</button>
+    </div>
+    
+
 
   </div>
+
+  <div class="modal fade" id="signUpDialog" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <a class="modal-title" id="exampleModalLabel">Sign Up to LED Controller</a>
+        
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group bmd-form-group"> 
+              <label for="createUsername" class="bmd-label-floating">Create your username:</label>
+              <input type="text" class="form-control" id="createUsername">
+            </div>
+            <div class="form-group bmd-form-group"> <!-- manually specified --> 
+              <label for="createPassword" class="bmd-label-floating">Create your password:</label>
+              <input type="text" class="form-control" id="createPassword">
+            </div>
+          
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+          <button type="button" class="btn btn-primary" id="submitAddQuote" data-dismiss="modal">SIGN UP</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal fade" id="aboutUsDialog" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <a class="modal-title" id="exampleModalLabel">About Us</a>
+        
+        </div>
+        <div class="modal-body">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vulputate diam quis mi ultricies, at rhoncus felis ultricies. Integer interdum blandit feugiat. Phasellus sed efficitur metus. Phasellus diam metus, varius et viverra eu, vestibulum ac nisl. Aliquam sem mi, maximus vel dolor iaculis, porttitor ultricies dolor. Morbi at enim mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam elementum ut enim sed convallis. Nam varius hendrerit urna eget ultrices. Aliquam porta volutpat ante, nec tincidunt nibh tristique eu. Vestibulum nunc nisl, luctus a congue in, blandit a orci. Proin at placerat mi. Ut facilisis elit accumsan purus vehicula, eu gravida enim rhoncus.
+            
+          
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/popper.js"></script>
   <script src="scripts/bootstrap-material-design.js"></script>

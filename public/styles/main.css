@@ -2,11 +2,35 @@ body {
     background: #DDDDDD;
 }
 
-.navbar {
-    background-color: #800000;
+.navbar, .modal-header {
+    background-color: #005a80;
     color: white;
+    justify-content: center;
+    font-weight: bold;
+    
+
 }
+
 
 .page-container {
     margin-top: 75px;
+}
+
+#loginButton,#signUpButton{
+    background-color:#cacaca;
+    color: black;
+    width:90px;
+}
+
+.buttonsPage1{
+    display:flex;
+    justify-content: center;
+}
+
+#aboutUsButton{
+position: fixed;
+right: 10px;
+bottom: 10px; 
+background-color:#cacaca;
+color: black;
 }
