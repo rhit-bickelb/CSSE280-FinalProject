@@ -1,31 +1,53 @@
-/**
- * @fileoverview
- * Provides the JavaScript interactions for all pages.
- *
- * @author 
- * PUT_YOUR_NAME_HERE
- */
 
-/** namespace. */
 var rhit = rhit || {};
 
-/** globals */
-rhit.variableName = "";
-
-/** function and class syntax examples */
-rhit.functionName = function () {
-	/** function body */
-};
-
-rhit.ClassName = class {
+rhit.LoginPageController = class {
 	constructor() {
 
 	}
+}
 
-	methodName() {
+rhit.HomePageController = class {
+	constructor() {
+
+	}
+	updateList(){
 
 	}
 }
+
+
+rhit.Device = class {
+	constructor() {
+
+	}
+}
+
+
+rhit.FBDeviceManager = class {
+	constructor() {
+
+	}
+	add(){
+
+	}
+	beginListening(){
+
+	}
+	stopListening(){
+
+	}
+	updateName(){
+
+	}
+	updateSettings(){
+
+	}
+	delete(){
+		
+	}
+}
+
 
 /* Main */
 /** function and class syntax examples */
