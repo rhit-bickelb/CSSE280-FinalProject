@@ -92,11 +92,20 @@ color: black;
     transform: rotate(-90deg);
    
   }
-
+  #collapseOne{
+    background-color: #B4B4B4
+  }
   #sliderWrapper{
       display:flex; 
+      align-items: center;
+      
 
   }
+  #buttonWrapper{
+    display:flex;
+    flex-wrap: nowrap; 
+
+}
 
   #redSlider{
     flex-grow: 1;
@@ -117,6 +126,12 @@ color: black;
       height:50px;
       background-color: #FFF743;
       flex-grow: 2;
+      vertical-align: middle;
+      
+  }
+
+  #deleteButton{
+      background-color: #ff00009f;
   }
 
  
