@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <title>LED controller</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark fixed-top">
+    <a class="navbar-brand" href="#">LED Controller</a>
+    <button type="button" id="signOutButton" class="btn text-light">SIGN OUT</button>
+  </nav>
+
+  <div id="mainPage" class="container page-container2 pl-0 pr-0">
+    <div id="yourDevicesDiv">&nbsp &nbsp Your Devices</div>
+
+    <div id="accordion" class="pr-3 pl-3 pb-3">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 id="dropdownHeader" class="mb-0">
+            <div>Living Room</div>
+            <button class="btn btn-link mb-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+              aria-controls="collapseOne">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div id="sliderWrapper">
+            <div class="slider-wrapper" id="redSlider">
+              <input type="range" min="0" max="255" value="128" step="1">
+
+            </div>
+            <div class="slider-wrapper"  id="greenSlider">
+              <input type="range" min="0" max="255" value="128" step="1">
+            </div>
+            <div class="slider-wrapper"  id="blueSlider">
+              <input type="range" min="0" max="255" value="128" step="1">
+            </div>
+            <div class="slider-wrapper"  id="brightnessSlider">
+              <input type="range" min="0" max="1" value="1" step="0.01">
+            </div>
+            <button id="onOffButton"class="btn btn-link mb-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              ON
+              </button>
+          
+            </div>
+        </div>
+        <div id="buttonWrapper">
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 id="dropdownHeader" class="mb-0">
+            <div>Kitchen</div>
+            <button class="btn btn-link mb-0" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+              aria-controls="collapseOne">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h5 id="dropdownHeader" class="mb-0">
+            <div>Bedroom</div>
+            <button class="btn btn-link mb-0" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+              aria-controls="collapseOne">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+          </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+          <div class="card-body">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/popper.js"></script>
+  <script src="scripts/bootstrap-material-design.js"></script>
+  <script>
+    $("body").bootstrapMaterialDesign();
+  </script>
+  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>

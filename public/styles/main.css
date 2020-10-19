@@ -14,6 +14,12 @@ body {
 
 .page-container {
     margin-top: 75px;
+   
+}
+
+.page-container2 {
+    margin-top: 55.6px;
+   
 }
 
 #loginButton,#signUpButton{
@@ -34,3 +40,83 @@ bottom: 10px;
 background-color:#cacaca;
 color: black;
 }
+
+#signOutButton{
+    position: fixed;
+    right: 10px;
+    font-size: 14px;
+}
+
+#accordion{
+    background-color: #515151;
+    
+}
+
+#yourDevicesDiv{
+   
+    background-color: #515151;
+    color: white;
+}
+
+.card{
+    margin-bottom: 5px;
+}
+
+#dropdownHeader{
+    display: flex;
+    justify-content: space-between;
+}
+/* 
+.inputeRange{
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
+} */
+
+
+.slider-wrapper {
+    display: inline-block;
+    width: 20px;
+    height: 150px;
+    padding: 0;
+    
+  }
+
+  .slider-wrapper input {
+    width: 150px;
+    height: 20px;
+    margin: 0;
+    transform-origin: 75px 75px;
+    transform: rotate(-90deg);
+   
+  }
+
+  #sliderWrapper{
+      display:flex; 
+
+  }
+
+  #redSlider{
+    flex-grow: 1;
+  }
+  #greenSlider{
+    flex-grow: 1;
+  }
+  #blueSlider{
+    flex-grow: 1;
+  }
+
+  #brightnessSlider{
+    flex-grow: 2;
+  }
+
+  #onOffButton{
+      width: 75px;
+      height:50px;
+      background-color: #FFF743;
+      flex-grow: 2;
+  }
+
+ 
