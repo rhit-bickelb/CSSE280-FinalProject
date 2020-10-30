@@ -3,12 +3,14 @@ var rhit = rhit || {};
 rhit.fbAuthManager = null;
 rhit.fbDeviceManager = null;
 
+convertToHex = function(number){
+	intValue = parseInt(number,10);
+	return intValue.toString(16);
+	   
+}
+
 rhit.LoginPageController = class {
 	constructor() {
-
-
-
-
 		document.querySelector("#signUpModalButton").onclick = (event) => {
 			const inputEmailEl = document.querySelector("#createEmail").value;
 			const inputPasswordEl = document.querySelector("#createPassword").value;
@@ -56,6 +58,23 @@ rhit.HomePageController = class {
 			// console.log(blueValue);
 			// console.log(brightValue);
 		}
+
+		//handel slider colors
+		document.querySelector("#colorRed").onclick = (event) => {
+			this.handelColors();
+		}
+		document.querySelector("#colorGreen").onclick = (event) => {
+			this.handelColors();
+		}
+		document.querySelector("#colorBlue").onclick = (event) => {
+			this.handelColors();
+		}
+		document.querySelector("#brightValue").onclick = (event) => {
+			this.handelColors();
+		}
+
+
+
 
 		//handle device buttons
 		document.querySelector("#onOffButton").onclick = (event) =>{
@@ -195,6 +214,22 @@ rhit.HomePageController = class {
 			break;
 		}
 		
+	}
+
+	handelColors(){
+		let redVal = convertToHex(document.querySelector("#colorRed").value);
+		let greenVal = convertToHex(document.querySelector("#colorGreen").value);
+		let blueVal = convertToHex(document.querySelector("#colorBlue").value);
+		let brightVal = convertToHex(100*document.querySelector("#brightValue").value);
+		
+		document.querySelector("#headingOne").color = `#${redVal}${greenVal}${blueVal}${brightVal}`;
+		document.querySelector("#headingOne").style.backgroundColor = `#${redVal}${greenVal}${blueVal}${brightVal}`;
+		
+		console.log(redVal);
+		console.log(greenVal);
+		console.log(blueVal);
+		console.log(brightVal);
+		console.log(document.querySelector("#headingOne").color);
 	}
 }
 

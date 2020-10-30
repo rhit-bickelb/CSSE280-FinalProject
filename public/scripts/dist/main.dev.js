@@ -10,6 +10,11 @@ var rhit = rhit || {};
 rhit.fbAuthManager = null;
 rhit.fbDeviceManager = null;
 
+convertToHex = function convertToHex(number) {
+  intValue = parseInt(number, 10);
+  return intValue.toString(16);
+};
+
 rhit.LoginPageController =
 /*#__PURE__*/
 function () {
@@ -62,6 +67,23 @@ function () {
       // console.log(greenValue);
       // console.log(blueValue);
       // console.log(brightValue);
+    }; //handel slider colors
+
+
+    document.querySelector("#colorRed").onclick = function (event) {
+      _this.handelColors();
+    };
+
+    document.querySelector("#colorGreen").onclick = function (event) {
+      _this.handelColors();
+    };
+
+    document.querySelector("#colorBlue").onclick = function (event) {
+      _this.handelColors();
+    };
+
+    document.querySelector("#brightValue").onclick = function (event) {
+      _this.handelColors();
     }; //handle device buttons
 
 
@@ -201,6 +223,21 @@ function () {
           effectButtons[0].value = 3;
           break;
       }
+    }
+  }, {
+    key: "handelColors",
+    value: function handelColors() {
+      var redVal = convertToHex(document.querySelector("#colorRed").value);
+      var greenVal = convertToHex(document.querySelector("#colorGreen").value);
+      var blueVal = convertToHex(document.querySelector("#colorBlue").value);
+      var brightVal = convertToHex(100 * document.querySelector("#brightValue").value);
+      document.querySelector("#headingOne").color = "#".concat(redVal).concat(greenVal).concat(blueVal).concat(brightVal);
+      document.querySelector("#headingOne").style.backgroundColor = "#".concat(redVal).concat(greenVal).concat(blueVal).concat(brightVal);
+      console.log(redVal);
+      console.log(greenVal);
+      console.log(blueVal);
+      console.log(brightVal);
+      console.log(document.querySelector("#headingOne").color);
     }
   }]);
 
