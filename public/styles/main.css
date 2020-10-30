@@ -124,7 +124,7 @@ color: black;
   }
 
 
-  #onOffButton{
+  #onOffButton, #onOffButtonModal{
       width: 75px;
       height:50px;
       background-color: #FFF743;
@@ -140,7 +140,7 @@ color: black;
   #flashButton, #fadeButton, #crazyButton, #noneButton, #deleteButton{
       height : 30px;
   }
-  #noneButton{
+  #noneButton, #noneButtonModal{
       background-color: gray;
   }
 

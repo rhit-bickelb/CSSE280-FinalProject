@@ -16,7 +16,7 @@
     <button type="button" id="signOutButton" class="btn text-light">SIGN OUT</button>
   </nav>
 
-  <div id="mainPage" class="container page-container2 pl-0 pr-0">
+  <div id="homePage" class="container page-container2 pl-0 pr-0">
     <div id="yourDevicesDiv">&nbsp &nbsp Your Devices</div>
 
     <div id="accordion" class="pr-3 pl-3 pb-3">
@@ -39,7 +39,7 @@
           <div id="sliderWrapper">
             <div id="sliderR">
               <div class="slider-wrapper" id="redSlider">
-                <input id = "colorRed" type="range" min="0" max="255" value="128" step="1">
+                <input type="range" min="0" max="255" value="128" step="1">
 
               </div>
               <div id="sliderName">R</div>
@@ -91,7 +91,7 @@
         </div>
 
       </div>
-      <div class="card">
+      <!-- <div class="card">
         <div class="card-header" id="headingTwo">
           <h5 id="dropdownHeader" class="mb-0">
             <div>Kitchen</div>
@@ -202,6 +202,7 @@
         </div>
       </div>
       
+      -->
       <div class="card">
         
             
@@ -212,7 +213,7 @@
         
     </div>
     
-  </div>
+  </div> 
 
 
 
@@ -229,42 +230,42 @@
 
             <div class="form-group bmd-form-group"> 
               <label for="roomName" class="bmd-label-floating">Room Name:</label>
-              <input type="text" class="form-control" id="roomName">
+              <input type="text" class="form-control" id="roomNameModal">
             </div>
             <div class="form-group bmd-form-group"> <!-- manually specified --> 
               <label for="MACAddres" class="bmd-label-floating">Raspberry Pi MAC address:</label>
-              <input type="text" class="form-control" id="MACAddres">
+              <input type="text" class="form-control" id="MACAddresModal">
             </div>
 
 
             <div id="sliderWrapper">
               <div id="sliderR">
                 <div class="slider-wrapper" id="redSlider">
-                  <input id = "colorRed" type="range" min="0" max="255" value="128" step="1">
+                  <input id = "colorRedModal" type="range" min="0" max="255" value="128" step="1">
   
                 </div>
                 <div id="sliderName">R</div>
               </div>
               <div id="sliderG">
                 <div class="slider-wrapper" id="greenSlider">
-                  <input type="range" min="0" max="255" value="128" step="1">
+                  <input  id = "colorGreenModal" type="range" min="0" max="255" value="128" step="1">
                 </div>
                 <div id="sliderName">G</div>
               </div>
               <div id="sliderB">
                 <div class="slider-wrapper" id="blueSlider">
-                  <input type="range" min="0" max="255" value="128" step="1">
+                  <input  id = "colorBlueModal"type="range" min="0" max="255" value="128" step="1">
                 </div>
                 <div id="sliderName">B</div>
               </div>
               <div id="sliderBright">
                 <div class="slider-wrapper" id="brightnessSlider">
-                  <input type="range" min="0" max="1" value="1" step="0.01">
+                  <input  id = "brightValueModal" type="range" min="0" max="1" value="1" step="0.01">
                 </div>
                 <div id="sliderName"><i class="material-icons">wb_sunny</i></div>
               </div>
               <div id="buttonDiv">
-              <button id="onOffButton" class="btn btn-link mb-0 mr-2">
+              <button id="onOffButtonModal" value="1"class="btn btn-link mb-0 mr-2">
                 ON
               </button>
             </div>
@@ -273,27 +274,23 @@
             <div class="pt-3">Effect:</div>
             <div id="buttonWrapper">
   
-              <button id="flashButton" class="btn btn-link mb-0 p-1">
+              <button id="flashButtonModal" value="3" class="btn btn-link mb-0 p-1">
                 FLASH
               </button>
-              <button id="fadeButton" class="btn btn-link mb-0 p-1">
+              <button id="fadeButtonModal"  class="btn btn-link mb-0 p-1">
                 FADE
               </button>
-              <button id="crazyButton" class="btn btn-link mb-0 p-1">
+              <button id="crazyButtonModal" class="btn btn-link mb-0 p-1">
                 CRAZY
               </button>
-              <button id="noneButton" class="btn btn-link mb-0 p-1">
+              <button id="noneButtonModal" class="btn btn-link mb-0 p-1">
                 NONE
               </button>
-              <button id="deleteButton" class="btn btn-link m-0 p-1">
+              <!-- <button id="deleteButton" class="btn btn-link m-0 p-1">
                 DELETE
-              </button>
+              </button> -->
             </div>
-          
-  
-          
-        
-          
+
   
         </div>
         <div class="modal-footer">
