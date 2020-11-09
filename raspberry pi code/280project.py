@@ -27,8 +27,8 @@ db= firestore.client();
 #sign in to your data
 while True:
   try:
-    email = "a@b.co"#input("Enter your email\n")
-    password  = "123456"#input("Enter your password\n")
+    email = input("Enter your email\n")
+    password  = input("Enter your password\n")
 
     user = auth.sign_in_with_email_and_password(email,password);
     break;
@@ -87,7 +87,9 @@ def on_snapshot(col_snapshot, changes, read_time):
     count = 0;
     for doc in col_snapshot:
       if doc.get('macAddress') == getmac.get_mac_address():
+        print(getmac.get_mac_address())
         red = doc.get('red')
+        print(red)
         green = doc.get('green')
         blue = doc.get('blue')
         brightness = doc.get('brightness')
@@ -113,6 +115,7 @@ while 1:
   #use gpio pins R=17 G=27 B=22
   if isOn == 1:
     if effect == 3: #none
+      
       redPWM.start((red/255)*100*brightness)
       bluePWM.start((blue/255)*100*brightness)
       greenPWM.start((green/255)*100*brightness)
