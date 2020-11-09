@@ -205,8 +205,7 @@ rhit.HomePageController = class {
 					document.querySelector("#colorRed" + dev.id).value,
 					document.querySelector("#colorGreen" + dev.id).value,
 					document.querySelector("#colorBlue" + dev.id).value,
-					document.querySelector("#brightValue" + dev.id).value,
-					"3");
+					document.querySelector("#brightValue" + dev.id).value);
 			}
 			document.querySelector("#colorGreen" + dev.id).onclick = (event) => {
 				this.handleColors(dev.id);
@@ -215,8 +214,7 @@ rhit.HomePageController = class {
 					document.querySelector("#colorRed" + dev.id).value,
 					document.querySelector("#colorGreen" + dev.id).value,
 					document.querySelector("#colorBlue" + dev.id).value,
-					document.querySelector("#brightValue" + dev.id).value,
-					"3");
+					document.querySelector("#brightValue" + dev.id).value);
 			}
 			document.querySelector("#colorBlue" + dev.id).onclick = (event) => {
 				this.handleColors(dev.id);
@@ -225,8 +223,7 @@ rhit.HomePageController = class {
 					document.querySelector("#colorRed" + dev.id).value,
 					document.querySelector("#colorGreen" + dev.id).value,
 					document.querySelector("#colorBlue" + dev.id).value,
-					document.querySelector("#brightValue" + dev.id).value,
-					"3");
+					document.querySelector("#brightValue" + dev.id).value);
 			}
 			document.querySelector("#onOffButton" + dev.id).onclick = (event) => {
 				const button = document.querySelector("#onOffButton" + dev.id);
@@ -248,23 +245,26 @@ rhit.HomePageController = class {
 					document.querySelector("#colorRed" + dev.id).value,
 					document.querySelector("#colorGreen" + dev.id).value,
 					document.querySelector("#colorBlue" + dev.id).value,
-					document.querySelector("#brightValue" + dev.id).value,
-					"3");
+					document.querySelector("#brightValue" + dev.id).value);
 			}
 			document.querySelector("#deleteButton" + dev.id).onclick = (event) => {
 				rhit.fbDeviceManager.delete(dev.id);
 			}
 			document.querySelector("#flashButton" + dev.id).onclick = (event) => {
 				// this.handleButtons(dev.id, 0)
+				rhit.fbDeviceManager.updateEffect(dev.id, 0);
 			}
 			document.querySelector("#fadeButton" + dev.id).onclick = (event) => {
 				// this.handleButtons(dev.id, 1)
+				rhit.fbDeviceManager.updateEffect(dev.id, 1);
 			}
 			document.querySelector("#crazyButton" + dev.id).onclick = (event) => {
 				// this.handleButtons(dev.id, 2)
+				rhit.fbDeviceManager.updateEffect(dev.id, 2);
 			}
 			document.querySelector("#noneButton" + dev.id).onclick = (event) => {
 				// this.handleButtons(dev.id, 3)
+				rhit.fbDeviceManager.updateEffect(dev.id, 3);
 			}
 			document.querySelector("#brightValue" + dev.id).onclick = (event) => {
 				rhit.fbDeviceManager.updateSettings(dev.id,
@@ -272,8 +272,7 @@ rhit.HomePageController = class {
 					document.querySelector("#colorRed" + dev.id).value,
 					document.querySelector("#colorGreen" + dev.id).value,
 					document.querySelector("#colorBlue" + dev.id).value,
-					document.querySelector("#brightValue" + dev.id).value,
-					"3");
+					document.querySelector("#brightValue" + dev.id).value);
 			}
 		}
 	}
@@ -350,19 +349,19 @@ rhit.HomePageController = class {
           <div id="sliderWrapper">
             <div id="sliderR">
               <div class="slider-wrapper" id="redSlider">
-                <input id="colorRed${dev.id}" type="range" min="0" max="255" value="${dev.red}" step="1">
+                <input id="colorRed${dev.id}" type="range" min="0" max="255" value=${dev.red} step="1">
               </div>
               <div id="sliderName">R</div>
             </div>
             <div id="sliderG">
               <div class="slider-wrapper" id="greenSlider">
-                <input id="colorGreen${dev.id}" type="range" min="0" max="255" value="${dev.green}" step="1">
+                <input id="colorGreen${dev.id}" type="range" min="0" max="255" value=${dev.green} step="1">
               </div>
               <div id="sliderName">G</div>
             </div>
             <div id="sliderB">
               <div class="slider-wrapper" id="blueSlider">
-                <input id="colorBlue${dev.id}" type="range" min="0" max="255" value="${dev.blue}" step="1">
+                <input id="colorBlue${dev.id}" type="range" min="0" max="255" value=${dev.blue} step="1">
               </div>
               <div id="sliderName">B</div>
             </div>
@@ -570,14 +569,24 @@ rhit.FBDeviceManager = class {
 			console.error("Error updating document: ", error);
 		});
 	}
-	updateSettings(uid, isOn, red, green, blue, brightness, effect) {
+	updateSettings(uid, isOn, red, green, blue, brightness) {
 		this._ref.doc(uid).update({
-			[rhit.FB_KEY_ON]: isOn,
-			[rhit.FB_KEY_RED]: red,
-			[rhit.FB_KEY_GREEN]: green,
-			[rhit.FB_KEY_BLUE]: blue,
-			[rhit.FB_KEY_BRIGHTNESS]: brightness,
-			[rhit.FB_KEY_EFFECT]: effect,
+			[rhit.FB_KEY_ON]: Number(isOn),
+			[rhit.FB_KEY_RED]: Number(red),
+			[rhit.FB_KEY_GREEN]: Number(green),
+			[rhit.FB_KEY_BLUE]: Number(blue),
+			[rhit.FB_KEY_BRIGHTNESS]: Number(brightness),
+		})
+		.then(() => {
+			console.log("Document successfully updated! ");
+		})
+		.catch(function(error) {
+			console.error("Error updating document: ", error);
+		});
+	}
+	updateEffect(uid, effect) {
+		this._ref.doc(uid).update({
+			[rhit.FB_KEY_EFFECT]: Number(effect),
 		})
 		.then(() => {
 			console.log("Document successfully updated! ");
