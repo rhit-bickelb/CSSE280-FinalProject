@@ -4,8 +4,8 @@ rhit.FB_KEY_DEV_NAME   = "deviceName";
 rhit.FB_KEY_MAC        = "macAddress";
 rhit.FB_KEY_ON         = "isOn";
 rhit.FB_KEY_RED        = "red";
-rhit.FB_KEY_GREEN      = "blue";
-rhit.FB_KEY_BLUE       = "green";
+rhit.FB_KEY_GREEN      = "green";
+rhit.FB_KEY_BLUE       = "blue";
 rhit.FB_KEY_BRIGHTNESS = "brightness";
 rhit.FB_KEY_EFFECT     = "effect";
 
@@ -162,7 +162,7 @@ rhit.HomePageController = class {
 		rhit.fbDeviceManager.beginListening(this.updateList.bind(this));
 	}
 	updateList() {
-		const newList = htmlToElement('<div id="accordion" class="pr-3 pl-3 pb-3">');
+		const newList = htmlToElement('<div id="accordion2" class="pr-3 pl-3 pb-3">');
 
 		console.log(rhit.fbDeviceManager.length);
 		for (let i = 0; i < rhit.fbDeviceManager.length; i++) {
@@ -176,7 +176,7 @@ rhit.HomePageController = class {
 		const addNewChild = htmlToElement('<div class="card"><button id="headingOne" class="btn btn-link mb-0 card-header" data-toggle="modal"data-target="#addNewDeviceDialog" type="submit">Add New Device</button></div>');
 		newList.appendChild(addNewChild);
 
-		const oldList = document.querySelector("#accordion");
+		const oldList = document.querySelector("#accordion2");
 		// oldList.removeAttribute("id");
 		// oldList.hidden = true;
 
@@ -184,12 +184,155 @@ rhit.HomePageController = class {
 
 		oldList.parentElement.removeChild(oldList);
 
-		this.handleColors();
+
+		for (let i = 0; i < rhit.fbDeviceManager.length; i++) {
+			const dev = rhit.fbDeviceManager.getDeviceAtIndex(i);
+			this.handleColors(dev.id);
+			const button = document.querySelector("#onOffButton" + dev.id);
+			if (button.value == "0") {
+				button.innerHTML = "OFF";
+				button.style.background = 'gray';
+			}
+			else if (button.value == "1") {
+				button.innerHTML = "ON";
+				button.style.background = '#FFF743';
+			}
+
+			document.querySelector("#colorRed" + dev.id).onclick = (event) => {
+				this.handleColors(dev.id);
+				rhit.fbDeviceManager.updateSettings(dev.id,
+					document.querySelector("#onOffButton" + dev.id).value,
+					document.querySelector("#colorRed" + dev.id).value,
+					document.querySelector("#colorGreen" + dev.id).value,
+					document.querySelector("#colorBlue" + dev.id).value,
+					document.querySelector("#brightValue" + dev.id).value,
+					"3");
+			}
+			document.querySelector("#colorGreen" + dev.id).onclick = (event) => {
+				this.handleColors(dev.id);
+				rhit.fbDeviceManager.updateSettings(dev.id,
+					document.querySelector("#onOffButton" + dev.id).value,
+					document.querySelector("#colorRed" + dev.id).value,
+					document.querySelector("#colorGreen" + dev.id).value,
+					document.querySelector("#colorBlue" + dev.id).value,
+					document.querySelector("#brightValue" + dev.id).value,
+					"3");
+			}
+			document.querySelector("#colorBlue" + dev.id).onclick = (event) => {
+				this.handleColors(dev.id);
+				rhit.fbDeviceManager.updateSettings(dev.id,
+					document.querySelector("#onOffButton" + dev.id).value,
+					document.querySelector("#colorRed" + dev.id).value,
+					document.querySelector("#colorGreen" + dev.id).value,
+					document.querySelector("#colorBlue" + dev.id).value,
+					document.querySelector("#brightValue" + dev.id).value,
+					"3");
+			}
+			document.querySelector("#onOffButton" + dev.id).onclick = (event) => {
+				const button = document.querySelector("#onOffButton" + dev.id);
+				console.log("Pressed ON/OFF Button");
+				if (button.value == "1") {
+					console.log("Turned Off");
+					button.value = "0";
+					button.innerHTML = "OFF";
+					button.style.background = 'gray';
+				}
+				else if (button.value == "0") {
+					console.log("Turned On");
+					button.value = "1";
+					button.innerHTML = "ON";
+					button.style.background = '#FFF743';
+				}
+				rhit.fbDeviceManager.updateSettings(dev.id,
+					document.querySelector("#onOffButton" + dev.id).value,
+					document.querySelector("#colorRed" + dev.id).value,
+					document.querySelector("#colorGreen" + dev.id).value,
+					document.querySelector("#colorBlue" + dev.id).value,
+					document.querySelector("#brightValue" + dev.id).value,
+					"3");
+			}
+			document.querySelector("#deleteButton" + dev.id).onclick = (event) => {
+				rhit.fbDeviceManager.delete(dev.id);
+			}
+			document.querySelector("#flashButton" + dev.id).onclick = (event) => {
+				// this.handleButtons(dev.id, 0)
+			}
+			document.querySelector("#fadeButton" + dev.id).onclick = (event) => {
+				// this.handleButtons(dev.id, 1)
+			}
+			document.querySelector("#crazyButton" + dev.id).onclick = (event) => {
+				// this.handleButtons(dev.id, 2)
+			}
+			document.querySelector("#noneButton" + dev.id).onclick = (event) => {
+				// this.handleButtons(dev.id, 3)
+			}
+			document.querySelector("#brightValue" + dev.id).onclick = (event) => {
+				rhit.fbDeviceManager.updateSettings(dev.id,
+					document.querySelector("#onOffButton" + dev.id).value,
+					document.querySelector("#colorRed" + dev.id).value,
+					document.querySelector("#colorGreen" + dev.id).value,
+					document.querySelector("#colorBlue" + dev.id).value,
+					document.querySelector("#brightValue" + dev.id).value,
+					"3");
+			}
+		}
+	}
+
+	// handleButtons(modalPressed) {
+	// 	let effectButtons = [document.querySelector("#flashButton"),
+	// 		document.querySelector("#fadeButton"),
+	// 		document.querySelector("#crazyButton"),
+	// 		document.querySelector("#noneButton")
+	// 	];
+
+	// 	for (let i = 0; i < effectButtons.length; i++) {
+	// 		effectButtons[i].style.background = "none";
+	// 	}
+
+
+	// 	switch (modalPressed) {
+	// 		case 0:
+	// 			effectButtons[0].style.background = "gray";
+	// 			effectButtons[0].value = 0;
+	// 			break;
+	// 		case 1:
+	// 			effectButtons[1].style.background = "gray";
+	// 			effectButtons[0].value = 1;
+	// 			break;
+	// 		case 2:
+	// 			effectButtons[2].style.background = "gray";
+	// 			effectButtons[0].value = 2;
+	// 			break;
+	// 		case 3:
+	// 			effectButtons[3].style.background = "gray";
+	// 			effectButtons[0].value = 3;
+	// 			break;
+	// 	}
+
+	// }
+
+	handleColors(deviceID) {
+		let redVal = convertToHex(document.querySelector("#colorRed" + deviceID).value);
+		let greenVal = convertToHex(document.querySelector("#colorGreen" + deviceID).value);
+		let blueVal = convertToHex(document.querySelector("#colorBlue" + deviceID).value);
+		// let brightVal = convertToHex(100 * document.querySelector("#brightValue" + deviceID).value);
+
+		if (redVal.length == 1) {
+			redVal = "0" + redVal;
+		}
+		if (greenVal.length == 1) {
+			greenVal = "0" + greenVal;
+		}
+		if (blueVal.length == 1) {
+			blueVal = "0" + blueVal;
+		}
+
+		document.querySelector("#headingOne" + deviceID).style.backgroundColor = `#${redVal}${greenVal}${blueVal}`;
 	}
 
 	_createCard(dev) {
 		return htmlToElement(`<div class="card">
-        <div class="card-header" id="headingOne" color="#00000000">
+        <div class="card-header" id="headingOne${dev.id}" color="#00000000">
           <h5 id="dropdownHeader" class="mb-0">
             <div>${dev.deviceName}</div>
             <button class="btn btn-link mb-0" data-toggle="collapse" data-target="#${dev.id}" aria-expanded="true"
@@ -207,49 +350,49 @@ rhit.HomePageController = class {
           <div id="sliderWrapper">
             <div id="sliderR">
               <div class="slider-wrapper" id="redSlider">
-                <input id="colorRed" type="range" min="0" max="255" value="${dev.red}" step="1">
+                <input id="colorRed${dev.id}" type="range" min="0" max="255" value="${dev.red}" step="1">
               </div>
               <div id="sliderName">R</div>
             </div>
             <div id="sliderG">
               <div class="slider-wrapper" id="greenSlider">
-                <input id="colorGreen" type="range" min="0" max="255" value="${dev.green}" step="1">
+                <input id="colorGreen${dev.id}" type="range" min="0" max="255" value="${dev.green}" step="1">
               </div>
               <div id="sliderName">G</div>
             </div>
             <div id="sliderB">
               <div class="slider-wrapper" id="blueSlider">
-                <input id="colorBlue" type="range" min="0" max="255" value="${dev.blue}" step="1">
+                <input id="colorBlue${dev.id}" type="range" min="0" max="255" value="${dev.blue}" step="1">
               </div>
               <div id="sliderName">B</div>
             </div>
             <div id="sliderBright">
               <div class="slider-wrapper" id="brightnessSlider">
-                <input id="brightValue" type="range" min="0" max="1" value="${dev.brightness}" step="0.01">
+                <input id="brightValue${dev.id}" type="range" min="0" max="1" value="${dev.brightness}" step="0.01">
               </div>
               <div id="sliderName"><i class="material-icons">wb_sunny</i></div>
             </div>
             <div id="buttonDiv">
-              <button id="onOffButton" class="btn btn-link mb-0 mr-2">
+              <button id="onOffButton${dev.id}" class="btn btn-link mb-0 mr-2" value=${dev.isOn}>
                 ON
               </button>
             </div>
           </div>
           <div class="pt-3">Effect:</div>
           <div id="buttonWrapper">
-            <button id="flashButton" class="btn btn-link mb-0 p-1">
+            <button id="flashButton${dev.id}" class="btn btn-link mb-0 p-1">
               FLASH
             </button>
-            <button id="fadeButton" class="btn btn-link mb-0 p-1">
+            <button id="fadeButton${dev.id}" class="btn btn-link mb-0 p-1">
               FADE
             </button>
-            <button id="crazyButton" class="btn btn-link mb-0 p-1">
+            <button id="crazyButton${dev.id}" class="btn btn-link mb-0 p-1">
               CRAZY
             </button>
-            <button id="noneButton" class="btn btn-link mb-0 p-1">
+            <button id="noneButton${dev.id}" class="btn btn-link mb-0 p-1">
               NONE
             </button>
-            <button id="deleteButton" class="btn btn-link m-0 p-1">
+            <button id="deleteButton${dev.id}" class="btn btn-link m-0 p-1 deleteButtonClass">
               DELETE
             </button>
           </div>
@@ -257,38 +400,38 @@ rhit.HomePageController = class {
       </div>`);
 	}
 
-	handleButtons(modalPressed) {
-		let effectButtons = [document.querySelector("#flashButton"),
-			document.querySelector("#fadeButton"),
-			document.querySelector("#crazyButton"),
-			document.querySelector("#noneButton")
-		];
+	// handleButtons(modalPressed) {
+	// 	let effectButtons = [document.querySelector("#flashButton"),
+	// 		document.querySelector("#fadeButton"),
+	// 		document.querySelector("#crazyButton"),
+	// 		document.querySelector("#noneButton")
+	// 	];
 
-		for (let i = 0; i < effectButtons.length; i++) {
-			effectButtons[i].style.background = "none";
-		}
+	// 	for (let i = 0; i < effectButtons.length; i++) {
+	// 		effectButtons[i].style.background = "none";
+	// 	}
 
 
-		switch (modalPressed) {
-			case 0:
-				effectButtons[0].style.background = "gray";
-				effectButtons[0].value = 0;
-				break;
-			case 1:
-				effectButtons[1].style.background = "gray";
-				effectButtons[0].value = 1;
-				break;
-			case 2:
-				effectButtons[2].style.background = "gray";
-				effectButtons[0].value = 2;
-				break;
-			case 3:
-				effectButtons[3].style.background = "gray";
-				effectButtons[0].value = 3;
-				break;
-		}
+	// 	switch (modalPressed) {
+	// 		case 0:
+	// 			effectButtons[0].style.background = "gray";
+	// 			effectButtons[0].value = 0;
+	// 			break;
+	// 		case 1:
+	// 			effectButtons[1].style.background = "gray";
+	// 			effectButtons[0].value = 1;
+	// 			break;
+	// 		case 2:
+	// 			effectButtons[2].style.background = "gray";
+	// 			effectButtons[0].value = 2;
+	// 			break;
+	// 		case 3:
+	// 			effectButtons[3].style.background = "gray";
+	// 			effectButtons[0].value = 3;
+	// 			break;
+	// 	}
 
-	}
+	// }
 
 	handleModalButtons(modalPressed) {
 		let effectButtons = [document.querySelector("#flashButtonModal"),
@@ -323,11 +466,14 @@ rhit.HomePageController = class {
 
 	}
 
-	handleColors() {
-		let redVal = convertToHex(document.querySelector("#colorRed").value);
+	handleColorsOLD() {
+		// let redVal = convertToHex(document.querySelector("#colorRed").value);
+		let redVal = "255";
 		let greenVal = convertToHex(document.querySelector("#colorGreen").value);
 		let blueVal = convertToHex(document.querySelector("#colorBlue").value);
 		let brightVal = convertToHex(100 * document.querySelector("#brightValue").value);
+
+		console.log("Here");
 
 		if (redVal.length == 1) {
 			redVal = "0" + redVal;
@@ -413,14 +559,35 @@ rhit.FBDeviceManager = class {
 	stopListening() {
 		this._unsubscribed();
 	}
-	updateName() {
-
+	updateName(name) {
+		this._ref.update({
+			[rhit.FB_KEY_DEV_NAME]: name,
+		})
+		.then(() => {
+			console.log("Document successfully updated! ");
+		})
+		.catch(function(error) {
+			console.error("Error updating document: ", error);
+		});
 	}
-	updateSettings() {
-
+	updateSettings(uid, isOn, red, green, blue, brightness, effect) {
+		this._ref.doc(uid).update({
+			[rhit.FB_KEY_ON]: isOn,
+			[rhit.FB_KEY_RED]: red,
+			[rhit.FB_KEY_GREEN]: green,
+			[rhit.FB_KEY_BLUE]: blue,
+			[rhit.FB_KEY_BRIGHTNESS]: brightness,
+			[rhit.FB_KEY_EFFECT]: effect,
+		})
+		.then(() => {
+			console.log("Document successfully updated! ");
+		})
+		.catch(function(error) {
+			console.error("Error updating document: ", error);
+		});
 	}
-	delete() {
-
+	delete(uid) {
+		return this._ref.doc(uid).delete();
 	}
 	get length() {
 		return this._documentSnapshots.length;

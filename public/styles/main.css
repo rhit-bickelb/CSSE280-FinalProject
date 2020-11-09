@@ -47,7 +47,7 @@ color: black;
     font-size: 14px;
 }
 
-#accordion{
+#accordion2{
     background-color: #515151;
     
 }
@@ -152,5 +152,12 @@ color: black;
 
   #sliderName{
       text-align: left;
+  }
+
+  .deleteButtonClass {
+    background-color: #ff00009f;
+    height : 30px;
+    position: absolute;
+    right: 30px;
   }
  
