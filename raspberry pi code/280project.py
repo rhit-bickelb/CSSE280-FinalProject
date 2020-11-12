@@ -4,6 +4,7 @@ import getmac
 import threading
 import time
 import RPi.GPIO as GPIO
+import getpass
 from firebase_admin import credentials
 from firebase_admin import firestore
 
@@ -24,11 +25,12 @@ firebase_admin.initialize_app(cred)
 
 db= firestore.client();
 
+print("Your mac address: ",getmac.get_mac_address())
 #sign in to your data
 while True:
   try:
     email = input("Enter your email\n")
-    password  = input("Enter your password\n")
+    password  = getpass.getpass()
 
     user = auth.sign_in_with_email_and_password(email,password);
     break;
@@ -40,22 +42,6 @@ uid = user['localId']
 
 doc_ref = db.collection(uid);
 
-# allDocs =doc_ref.get()
-# roomCount =0;
-
-# thisPiRooms = ["none"]; #need to make this be the number of devices
-# #filter out devices not on this pi
-# print("docref ",type(doc_ref))
-# print("allDocs" ,allDocs)
-# for doc in allDocs:
-  
-#   # currentDoc = doc_ref.document(doc.id)
-#   # print("document mac" + doc.get('macAddress'))
-#   # print( getmac.get_mac_address())
-#   if doc.get('macAddress') == getmac.get_mac_address():
-#     thisPiRooms[roomCount] = doc;
-#     print(thisPiRooms)
-#     roomCount = roomCount +1;
 
 GPIO.setup(11,GPIO.OUT);
 GPIO.setup(13,GPIO.OUT);
@@ -87,9 +73,9 @@ def on_snapshot(col_snapshot, changes, read_time):
     count = 0;
     for doc in col_snapshot:
       if doc.get('macAddress') == getmac.get_mac_address():
-        print(getmac.get_mac_address())
+        #print(getmac.get_mac_address())
         red = doc.get('red')
-        print(red)
+        #print(red)
         green = doc.get('green')
         blue = doc.get('blue')
         brightness = doc.get('brightness')
@@ -158,36 +144,6 @@ while 1:
     bluePWM.start((blue/255)*100*0)
     greenPWM.start((green/255)*100*0)
 
-# GPIO.setup(11,GPIO.OUT);
-# GPIO.setup(13,GPIO.OUT);
-# GPIO.setup(15,GPIO.OUT);
-# redPWM = GPIO.PWM(11,100)
-# greenPWM = GPIO.PWM(13,100)
-# bluePWM = GPIO.PWM(15,100)
-
-# while 1:
-#   count = 0;
-#   #handle led colors
-#   for room in thisPiRooms:
-#     red = room.get('red')
-#     green = room.get('green')
-#     blue = room.get('blue')
-#     brightness = room.get('brightness')
-#     deviceName = room.get('deviceName')
-#     effect = room.get('effect')
-#     isOn = room.get('isOn')
-    
-#     if count == 0: #use gpio pins R=17 G=27 B=22
-     
-#       redPWM.start((red/255)*100)
-#       bluePWM.start((blue/255)*100)
-#       greenPWM.start((green/255)*100)
-
-#     if count ==1: #use gpio pins R=5 G=6 B=26
-#       GPIO.setup(5,GPIO.OUT);
-#       GPIO.setup(6,GPIO.OUT);
-#       GPIO.setup(26,GPIO.OUT);
-#     count = count +1;
 
 
 
