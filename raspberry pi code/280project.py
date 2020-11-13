@@ -1,10 +1,10 @@
-import pyrebase
-import firebase_admin
-import getmac
-import threading
+import pyrebase #https://github.com/thisbejim/Pyrebase
+import firebase_admin #https://firebase.google.com/docs/admin/setup
+import getmac #https://pypi.org/project/getmac/
+import threading 
 import time
-import RPi.GPIO as GPIO
-import getpass
+import RPi.GPIO as GPIO #https://www.ics.com/blog/control-raspberry-pi-gpio-pins-python
+import getpass #https://www.geeksforgeeks.org/getpass-and-getuser-in-python-password-without-echo/
 from firebase_admin import credentials
 from firebase_admin import firestore
 
@@ -18,12 +18,12 @@ config = {
   "storageBucket": "projectId.appspot.com"
 }
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth();
+auth = firebase.auth()
 
 cred = credentials.Certificate("csse280-finalproject-bb-wb-firebase-adminsdk-p22iu-54a20fa03e.json")
 firebase_admin.initialize_app(cred)
 
-db= firestore.client();
+db= firestore.client()
 
 print("Your mac address: ",getmac.get_mac_address())
 #sign in to your data
@@ -87,15 +87,15 @@ def on_snapshot(col_snapshot, changes, read_time):
 
     callback_done.set()
 
-
 print("about to start snapshot")
 # Watch the collection query
 query_watch = doc_ref.on_snapshot(on_snapshot)
+
 multiplier = True;
 fadevalue = 1
 crazyvalueblue =0;
 crazyvaluered =0;
-crazyvaluegreen =1;
+crazyvaluegr
 while 1:
   
   #use gpio pins R=17 G=27 B=22
