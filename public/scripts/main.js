@@ -1,13 +1,14 @@
 var rhit = rhit || {};
 
-rhit.FB_KEY_DEV_NAME   = "deviceName";
-rhit.FB_KEY_MAC        = "macAddress";
-rhit.FB_KEY_ON         = "isOn";
-rhit.FB_KEY_RED        = "red";
-rhit.FB_KEY_GREEN      = "green";
-rhit.FB_KEY_BLUE       = "blue";
+rhit.FB_KEY_DEV_NAME = "deviceName";
+rhit.FB_KEY_MAC = "macAddress";
+rhit.FB_KEY_ON = "isOn";
+rhit.FB_KEY_RED = "red";
+rhit.FB_KEY_GREEN = "green";
+rhit.FB_KEY_BLUE = "blue";
 rhit.FB_KEY_BRIGHTNESS = "brightness";
-rhit.FB_KEY_EFFECT     = "effect";
+rhit.FB_KEY_EFFECT = "effect";
+rhit.FB_SHOWN = "shown";
 
 rhit.fbAuthManager = null;
 rhit.fbDeviceManager = null;
@@ -65,16 +66,7 @@ rhit.HomePageController = class {
 			const brightValue = document.querySelector("#brightValueModal").value;
 			const onOffvalue = document.querySelector("#onOffButtonModal").value;
 			const buttonEffect = document.querySelector("#flashButtonModal").value; //flashButton stores the state of all the buttons
-			rhit.fbDeviceManager.add(roomName, MACAddress, onOffvalue, redValue, greenValue, blueValue, brightValue, buttonEffect);
-
-			console.log(roomName);
-			console.log(MACAddress);
-			console.log(redValue);
-			console.log(greenValue);
-			console.log(blueValue);
-			console.log(brightValue);
-			console.log(onOffvalue);
-			console.log(buttonEffect);
+			rhit.fbDeviceManager.add(roomName, MACAddress, onOffvalue, redValue, greenValue, blueValue, brightValue, buttonEffect, "collapse");
 		}
 
 		//handel slider colors
@@ -90,9 +82,6 @@ rhit.HomePageController = class {
 		document.querySelector("#brightValue").onclick = (event) => {
 			this.handleColors();
 		}
-
-
-
 
 		//handle device buttons
 		document.querySelector("#onOffButton").onclick = (event) => {
@@ -110,20 +99,6 @@ rhit.HomePageController = class {
 				button.style.background = '#FFF743';
 				return;
 			}
-		}
-
-
-		document.querySelector("#flashButton").onclick = (event) => {
-			this.handleButtons(0);
-		}
-		document.querySelector("#fadeButton").onclick = (event) => {
-			this.handleButtons(1);
-		}
-		document.querySelector("#crazyButton").onclick = (event) => {
-			this.handleButtons(2);
-		}
-		document.querySelector("#noneButton").onclick = (event) => {
-			this.handleButtons(3);
 		}
 
 		//handle modal buttons
@@ -164,11 +139,10 @@ rhit.HomePageController = class {
 	updateList() {
 		const newList = htmlToElement('<div id="accordion2" class="pr-3 pl-3 pb-3">');
 
-		console.log(rhit.fbDeviceManager.length);
 		for (let i = 0; i < rhit.fbDeviceManager.length; i++) {
 			const dev = rhit.fbDeviceManager.getDeviceAtIndex(i);
 			const newCard = this._createCard(dev);
-			console.log(dev);
+
 
 			newList.appendChild(newCard);
 		}
@@ -177,28 +151,26 @@ rhit.HomePageController = class {
 		newList.appendChild(addNewChild);
 
 		const oldList = document.querySelector("#accordion2");
-		// oldList.removeAttribute("id");
-		// oldList.hidden = true;
 
 		oldList.parentElement.appendChild(newList);
 
 		oldList.parentElement.removeChild(oldList);
 
-
 		for (let i = 0; i < rhit.fbDeviceManager.length; i++) {
 			const dev = rhit.fbDeviceManager.getDeviceAtIndex(i);
 			this.handleColors(dev.id);
+			this.handleButtons(dev.id);
 			const button = document.querySelector("#onOffButton" + dev.id);
 			if (button.value == "0") {
 				button.innerHTML = "OFF";
 				button.style.background = 'gray';
-			}
-			else if (button.value == "1") {
+			} else if (button.value == "1") {
 				button.innerHTML = "ON";
 				button.style.background = '#FFF743';
 			}
 
 			document.querySelector("#colorRed" + dev.id).onclick = (event) => {
+				this._checkCollapseStatus();
 				this.handleColors(dev.id);
 				rhit.fbDeviceManager.updateSettings(dev.id,
 					document.querySelector("#onOffButton" + dev.id).value,
@@ -208,6 +180,7 @@ rhit.HomePageController = class {
 					document.querySelector("#brightValue" + dev.id).value);
 			}
 			document.querySelector("#colorGreen" + dev.id).onclick = (event) => {
+				this._checkCollapseStatus();
 				this.handleColors(dev.id);
 				rhit.fbDeviceManager.updateSettings(dev.id,
 					document.querySelector("#onOffButton" + dev.id).value,
@@ -217,6 +190,7 @@ rhit.HomePageController = class {
 					document.querySelector("#brightValue" + dev.id).value);
 			}
 			document.querySelector("#colorBlue" + dev.id).onclick = (event) => {
+				this._checkCollapseStatus();
 				this.handleColors(dev.id);
 				rhit.fbDeviceManager.updateSettings(dev.id,
 					document.querySelector("#onOffButton" + dev.id).value,
@@ -226,16 +200,13 @@ rhit.HomePageController = class {
 					document.querySelector("#brightValue" + dev.id).value);
 			}
 			document.querySelector("#onOffButton" + dev.id).onclick = (event) => {
+				this._checkCollapseStatus();
 				const button = document.querySelector("#onOffButton" + dev.id);
-				console.log("Pressed ON/OFF Button");
 				if (button.value == "1") {
-					console.log("Turned Off");
 					button.value = "0";
 					button.innerHTML = "OFF";
 					button.style.background = 'gray';
-				}
-				else if (button.value == "0") {
-					console.log("Turned On");
+				} else if (button.value == "0") {
 					button.value = "1";
 					button.innerHTML = "ON";
 					button.style.background = '#FFF743';
@@ -248,25 +219,31 @@ rhit.HomePageController = class {
 					document.querySelector("#brightValue" + dev.id).value);
 			}
 			document.querySelector("#deleteButton" + dev.id).onclick = (event) => {
+				this._checkCollapseStatus();
 				rhit.fbDeviceManager.delete(dev.id);
 			}
 			document.querySelector("#flashButton" + dev.id).onclick = (event) => {
-				// this.handleButtons(dev.id, 0)
+				this._checkCollapseStatus();
+				this.handleButtons(dev.id)
 				rhit.fbDeviceManager.updateEffect(dev.id, 0);
 			}
 			document.querySelector("#fadeButton" + dev.id).onclick = (event) => {
-				// this.handleButtons(dev.id, 1)
+				this._checkCollapseStatus();
+				this.handleButtons(dev.id)
 				rhit.fbDeviceManager.updateEffect(dev.id, 1);
 			}
 			document.querySelector("#crazyButton" + dev.id).onclick = (event) => {
-				// this.handleButtons(dev.id, 2)
+				this._checkCollapseStatus();
+				this.handleButtons(dev.id)
 				rhit.fbDeviceManager.updateEffect(dev.id, 2);
 			}
 			document.querySelector("#noneButton" + dev.id).onclick = (event) => {
-				// this.handleButtons(dev.id, 3)
+				this._checkCollapseStatus();
+				this.handleButtons(dev.id)
 				rhit.fbDeviceManager.updateEffect(dev.id, 3);
 			}
 			document.querySelector("#brightValue" + dev.id).onclick = (event) => {
+				this._checkCollapseStatus();
 				rhit.fbDeviceManager.updateSettings(dev.id,
 					document.querySelector("#onOffButton" + dev.id).value,
 					document.querySelector("#colorRed" + dev.id).value,
@@ -277,38 +254,16 @@ rhit.HomePageController = class {
 		}
 	}
 
-	// handleButtons(modalPressed) {
-	// 	let effectButtons = [document.querySelector("#flashButton"),
-	// 		document.querySelector("#fadeButton"),
-	// 		document.querySelector("#crazyButton"),
-	// 		document.querySelector("#noneButton")
-	// 	];
+	_checkCollapseStatus() {
+		for (let i = 0; i < rhit.fbDeviceManager.length; i++) {
+			const dev = rhit.fbDeviceManager.getDeviceAtIndex(i);
+			rhit.fbDeviceManager.updateShown(dev.id, document.querySelector("#container" + dev.id).className);
+		}
+	}
 
-	// 	for (let i = 0; i < effectButtons.length; i++) {
-	// 		effectButtons[i].style.background = "none";
-	// 	}
-
-
-	// 	switch (modalPressed) {
-	// 		case 0:
-	// 			effectButtons[0].style.background = "gray";
-	// 			effectButtons[0].value = 0;
-	// 			break;
-	// 		case 1:
-	// 			effectButtons[1].style.background = "gray";
-	// 			effectButtons[0].value = 1;
-	// 			break;
-	// 		case 2:
-	// 			effectButtons[2].style.background = "gray";
-	// 			effectButtons[0].value = 2;
-	// 			break;
-	// 		case 3:
-	// 			effectButtons[3].style.background = "gray";
-	// 			effectButtons[0].value = 3;
-	// 			break;
-	// 	}
-
-	// }
+	handleButtons(deviceID) {
+		document.querySelector(".selectedButton" + deviceID).style.backgroundColor = "gray";
+	}
 
 	handleColors(deviceID) {
 		let redVal = convertToHex(document.querySelector("#colorRed" + deviceID).value);
@@ -334,8 +289,8 @@ rhit.HomePageController = class {
         <div class="card-header" id="headingOne${dev.id}" color="#00000000">
           <h5 id="dropdownHeader" class="mb-0">
             <div>${dev.deviceName}</div>
-            <button class="btn btn-link mb-0" data-toggle="collapse" data-target="#${dev.id}" aria-expanded="true"
-              aria-controls="${dev.id}">
+            <button id="dropper${dev.id}" class="btn btn-link mb-0" data-toggle="collapse" data-target="#container${dev.id}" aria-expanded="true"
+              aria-controls="container${dev.id}">
               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -345,7 +300,7 @@ rhit.HomePageController = class {
           </h5>
         </div>
 
-        <div id="${dev.id}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div id="container${dev.id}" class="${dev.shown}" aria-labelledby="headingOne" data-parent="#accordion">
           <div id="sliderWrapper">
             <div id="sliderR">
               <div class="slider-wrapper" id="redSlider">
@@ -379,58 +334,25 @@ rhit.HomePageController = class {
           </div>
           <div class="pt-3">Effect:</div>
           <div id="buttonWrapper">
-            <button id="flashButton${dev.id}" class="btn btn-link mb-0 p-1">
+            <button id="flashButton${dev.id}" class="btn btn-link mb-0 p-1 ${(dev.effect == 0) ? `selectedButton${dev.id}` : 'notSelected'}">
               FLASH
             </button>
-            <button id="fadeButton${dev.id}" class="btn btn-link mb-0 p-1">
+            <button id="fadeButton${dev.id}" class="btn btn-link mb-0 p-1 ${(dev.effect == 1) ? `selectedButton${dev.id}` : 'notSelected'}">
               FADE
             </button>
-            <button id="crazyButton${dev.id}" class="btn btn-link mb-0 p-1">
+            <button id="crazyButton${dev.id}" class="btn btn-link mb-0 p-1 ${(dev.effect == 2) ? `selectedButton${dev.id}` : 'notSelected'}">
               CRAZY
             </button>
-            <button id="noneButton${dev.id}" class="btn btn-link mb-0 p-1">
+            <button id="noneButton${dev.id}" class="btn btn-link mb-0 p-1 ${(dev.effect == 3) ? `selectedButton${dev.id}` : 'notSelected'}">
               NONE
             </button>
-            <button id="deleteButton${dev.id}" class="btn btn-link m-0 p-1 deleteButtonClass">
+            <button id="deleteButton${dev.id}" class="btn m-0 p-1 deleteButtonClass">
               DELETE
             </button>
           </div>
         </div>
       </div>`);
 	}
-
-	// handleButtons(modalPressed) {
-	// 	let effectButtons = [document.querySelector("#flashButton"),
-	// 		document.querySelector("#fadeButton"),
-	// 		document.querySelector("#crazyButton"),
-	// 		document.querySelector("#noneButton")
-	// 	];
-
-	// 	for (let i = 0; i < effectButtons.length; i++) {
-	// 		effectButtons[i].style.background = "none";
-	// 	}
-
-
-	// 	switch (modalPressed) {
-	// 		case 0:
-	// 			effectButtons[0].style.background = "gray";
-	// 			effectButtons[0].value = 0;
-	// 			break;
-	// 		case 1:
-	// 			effectButtons[1].style.background = "gray";
-	// 			effectButtons[0].value = 1;
-	// 			break;
-	// 		case 2:
-	// 			effectButtons[2].style.background = "gray";
-	// 			effectButtons[0].value = 2;
-	// 			break;
-	// 		case 3:
-	// 			effectButtons[3].style.background = "gray";
-	// 			effectButtons[0].value = 3;
-	// 			break;
-	// 	}
-
-	// }
 
 	handleModalButtons(modalPressed) {
 		let effectButtons = [document.querySelector("#flashButtonModal"),
@@ -462,38 +384,12 @@ rhit.HomePageController = class {
 				effectButtons[0].value = 3;
 				break;
 		}
-
-	}
-
-	handleColorsOLD() {
-		// let redVal = convertToHex(document.querySelector("#colorRed").value);
-		let redVal = "255";
-		let greenVal = convertToHex(document.querySelector("#colorGreen").value);
-		let blueVal = convertToHex(document.querySelector("#colorBlue").value);
-		let brightVal = convertToHex(100 * document.querySelector("#brightValue").value);
-
-		console.log("Here");
-
-		if (redVal.length == 1) {
-			redVal = "0" + redVal;
-		}
-		if (greenVal.length == 1) {
-			greenVal = "0" + greenVal;
-		}
-		if (blueVal.length == 1) {
-			blueVal = "0" + blueVal;
-		}
-
-		document.querySelector("#headingOne").color = `#${redVal}${greenVal}${blueVal}${brightVal}`;
-		// document.querySelector("#headingOne").style.backgroundColor = `#${redVal}${greenVal}${blueVal}${brightVal}`; // I don't think brightness should have an affect on the visuals
-		document.querySelector("#headingOne").style.backgroundColor = `#${redVal}${greenVal}${blueVal}`;
-
 	}
 }
 
 
 rhit.Device = class {
-	constructor(id, deviceName, isOn, red, green, blue, brightness, effect) {
+	constructor(id, deviceName, isOn, red, green, blue, brightness, effect, shown) {
 		this.id = id;
 		this.deviceName = deviceName;
 		this.isOn = isOn;
@@ -502,6 +398,7 @@ rhit.Device = class {
 		this.blue = blue;
 		this.brightness = brightness;
 		this.effect = effect;
+		this.shown = shown;
 	}
 }
 
@@ -512,13 +409,10 @@ rhit.FBDeviceManager = class {
 		this._uid = uid;
 		this._documentSnapshots = [];
 		this._ref = firebase.firestore().collection(`/${this._uid}`);
-		// this._ref.add({
-		// 	"MACaddress": "00:0a:95:9d:68:16"
-		// })
 		this._unsubscribed = null;
 
 	}
-	add(name, macAddress, isOn, red, green, blue, brightness, effect) {
+	add(name, macAddress, isOn, red, green, blue, brightness, effect, shown) {
 		this._ref.add({
 				[rhit.FB_KEY_DEV_NAME]: name,
 				[rhit.FB_KEY_MAC]: macAddress,
@@ -528,6 +422,7 @@ rhit.FBDeviceManager = class {
 				[rhit.FB_KEY_BLUE]: blue,
 				[rhit.FB_KEY_BRIGHTNESS]: brightness,
 				[rhit.FB_KEY_EFFECT]: effect,
+				[rhit.FB_SHOWN]: shown,
 			})
 			.then(function (docRef) {
 				console.log("Document written with ID: ", docRef.id);
@@ -541,16 +436,9 @@ rhit.FBDeviceManager = class {
 		console.log(this._ref);
 		this._unsubscribed = query.onSnapshot((querySnapshot) => {
 
-
 			this._documentSnapshots = querySnapshot.docs;
-			console.log(querySnapshot.docs);
 
 			changeListener();
-			//prints updates
-			// querySnapshot.forEach( (doc) =>{
-			// 	console.log(doc.data()); 
-			// });
-
 		});
 
 
@@ -560,40 +448,51 @@ rhit.FBDeviceManager = class {
 	}
 	updateName(name) {
 		this._ref.update({
-			[rhit.FB_KEY_DEV_NAME]: name,
-		})
-		.then(() => {
-			console.log("Document successfully updated! ");
-		})
-		.catch(function(error) {
-			console.error("Error updating document: ", error);
-		});
+				[rhit.FB_KEY_DEV_NAME]: name,
+			})
+			.then(() => {
+				console.log("Document successfully updated! ");
+			})
+			.catch(function (error) {
+				console.error("Error updating document: ", error);
+			});
 	}
 	updateSettings(uid, isOn, red, green, blue, brightness) {
 		this._ref.doc(uid).update({
-			[rhit.FB_KEY_ON]: Number(isOn),
-			[rhit.FB_KEY_RED]: Number(red),
-			[rhit.FB_KEY_GREEN]: Number(green),
-			[rhit.FB_KEY_BLUE]: Number(blue),
-			[rhit.FB_KEY_BRIGHTNESS]: Number(brightness),
-		})
-		.then(() => {
-			console.log("Document successfully updated! ");
-		})
-		.catch(function(error) {
-			console.error("Error updating document: ", error);
-		});
+				[rhit.FB_KEY_ON]: Number(isOn),
+				[rhit.FB_KEY_RED]: Number(red),
+				[rhit.FB_KEY_GREEN]: Number(green),
+				[rhit.FB_KEY_BLUE]: Number(blue),
+				[rhit.FB_KEY_BRIGHTNESS]: Number(brightness),
+			})
+			.then(() => {
+				console.log("Document successfully updated! ");
+			})
+			.catch(function (error) {
+				console.error("Error updating document: ", error);
+			});
 	}
 	updateEffect(uid, effect) {
 		this._ref.doc(uid).update({
-			[rhit.FB_KEY_EFFECT]: Number(effect),
-		})
-		.then(() => {
-			console.log("Document successfully updated! ");
-		})
-		.catch(function(error) {
-			console.error("Error updating document: ", error);
-		});
+				[rhit.FB_KEY_EFFECT]: Number(effect),
+			})
+			.then(() => {
+				console.log("Document successfully updated! ");
+			})
+			.catch(function (error) {
+				console.error("Error updating document: ", error);
+			});
+	}
+	updateShown(uid, shown) {
+		this._ref.doc(uid).update({
+				[rhit.FB_SHOWN]: shown,
+			})
+			.then(() => {
+
+			})
+			.catch(function (error) {
+				console.error("Error updating document: ", error);
+			});
 	}
 	delete(uid) {
 		return this._ref.doc(uid).delete();
@@ -613,6 +512,7 @@ rhit.FBDeviceManager = class {
 			docSnapshot.get(rhit.FB_KEY_BLUE),
 			docSnapshot.get(rhit.FB_KEY_BRIGHTNESS),
 			docSnapshot.get(rhit.FB_KEY_EFFECT),
+			docSnapshot.get(rhit.FB_SHOWN),
 		);
 		return dev;
 	}
@@ -704,8 +604,9 @@ rhit.main = function () {
 
 	rhit.fbAuthManager = new rhit.FbAuthManager();
 	rhit.fbAuthManager.beginListening(() => {
-		rhit.initalizePage();
 		rhit.checkForRedirects();
+		rhit.initalizePage();
+		console.log("Signed In? " + rhit.fbAuthManager.isSignedIn);
 	});
 };
 

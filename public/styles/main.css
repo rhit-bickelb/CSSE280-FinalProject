@@ -1,71 +1,74 @@
 body {
-    background: #DDDDDD;
+  background: #DDDDDD;
 }
 
-.navbar, .modal-header {
-    background-color: #005a80;
-    color: white;
-    justify-content: center;
-    font-weight: bold;
-    
+.navbar,
+.modal-header {
+  background-color: #005a80;
+  color: white;
+  justify-content: center;
+  font-weight: bold;
+
 
 }
 
 
 .page-container {
-    margin-top: 75px;
-   
+  margin-top: 75px;
+
 }
 
 .page-container2 {
-    margin-top: 55.6px;
-   
+  margin-top: 55.6px;
+
 }
 
-#loginButton,#signUpButton{
-    background-color:#cacaca;
-    color: black;
-    width:90px;
+#loginButton,
+#signUpButton {
+  background-color: #cacaca;
+  color: black;
+  width: 90px;
 }
 
-.buttonsPage1{
-    display:flex;
-    justify-content: center;
+.buttonsPage1 {
+  display: flex;
+  justify-content: center;
 }
 
-#aboutUsButton{
-position: fixed;
-right: 10px;
-bottom: 10px; 
-background-color:#cacaca;
-color: black;
+#aboutUsButton {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  background-color: #cacaca;
+  color: black;
 }
 
-#signOutButton{
-    position: fixed;
-    right: 10px;
-    font-size: 14px;
+#signOutButton {
+  position: fixed;
+  right: 10px;
+  font-size: 14px;
 }
 
-#accordion2{
-    background-color: #515151;
-    
+#accordion2 {
+  background-color: #515151;
+
 }
 
-#yourDevicesDiv{
-   
-    background-color: #515151;
-    color: white;
+#yourDevicesDiv {
+
+  background-color: #515151;
+  color: white;
 }
 
-.card{
-    margin-bottom: 5px;
+.card {
+  margin-bottom: 5px;
 }
 
-#dropdownHeader{
-    display: flex;
-    justify-content: space-between;
+#dropdownHeader {
+  display: flex;
+  justify-content: space-between;
 }
+
 /* 
 .inputeRange{
     writing-mode: bt-lr;
@@ -77,87 +80,104 @@ color: black;
 
 
 .slider-wrapper {
-    display: inline-block;
-    width: 20px;
-    height: 150px;
-    padding: 0;
-    justify-content: center;
-    
-  }
-
-  .slider-wrapper input {
-    width: 150px;
-    height: 20px;
-    margin: 0;
-    transform-origin: 75px 75px;
-    transform: rotate(-90deg);
-   
-  }
-  #collapseOne, #collapseTwo, #collapseThree{
-    background-color: #B4B4B4
-  }
-  #sliderWrapper{
-      display:flex; 
-      align-items: center;
-      
-
-  }
-  #buttonWrapper{
-    display:flex;
-    flex-wrap: nowrap; 
+  display: inline-block;
+  width: 20px;
+  height: 150px;
+  padding: 0;
+  justify-content: center;
 
 }
 
-  #sliderR{
-    justify-content: center;
-    flex-grow: 1;
-  }
-  #sliderG{
-    flex-grow: 1;
-  }
-  #sliderB{
-    flex-grow: 1;
-  }
+.slider-wrapper input {
+  width: 150px;
+  height: 20px;
+  margin: 0;
+  transform-origin: 75px 75px;
+  transform: rotate(-90deg);
 
-  #sliderBright{
-    flex-grow: 2;
-  }
+}
+
+#collapseOne,
+#collapseTwo,
+#collapseThree {
+  background-color: #B4B4B4
+}
+
+#sliderWrapper {
+  display: flex;
+  align-items: center;
 
 
-  #onOffButton, #onOffButtonModal{
-      width: 75px;
-      height:50px;
-      background-color: #FFF743;
-      flex-grow: 1;
-      vertical-align: middle;
-      
-  }
+}
 
-  #deleteButton{
-      background-color: #ff00009f;
-  }
+#buttonWrapper {
+  display: flex;
+  flex-wrap: nowrap;
 
-  #flashButton, #fadeButton, #crazyButton, #noneButton, #deleteButton{
-      height : 30px;
-  }
-  #noneButton, #noneButtonModal{
-      background-color: gray;
-  }
+}
 
-  #deleteButton{
-    position: absolute;
-    right: 30px;
- 
-  }
+#sliderR {
+  justify-content: center;
+  flex-grow: 1;
+}
 
-  #sliderName{
-      text-align: left;
-  }
+#sliderG {
+  flex-grow: 1;
+}
 
-  .deleteButtonClass {
-    background-color: #ff00009f;
-    height : 30px;
-    position: absolute;
-    right: 30px;
-  }
- 
+#sliderB {
+  flex-grow: 1;
+}
+
+#sliderBright {
+  flex-grow: 2;
+}
+
+
+#onOffButton,
+#onOffButtonModal {
+  width: 75px;
+  height: 50px;
+  background-color: #FFF743;
+  flex-grow: 1;
+  vertical-align: middle;
+
+}
+
+#flashButton,
+#fadeButton,
+#crazyButton,
+#noneButton,
+#deleteButton {
+  height: 30px;
+}
+
+#noneButton,
+#noneButtonModal {
+  background-color: gray;
+}
+
+#deleteButton {
+  position: absolute;
+  right: 30px;
+  background-color: #df0000;
+}
+
+#sliderName {
+  text-align: left;
+}
+
+.deleteButtonClass {
+  background-color: #ff00009f;
+  height: 30px;
+  position: absolute;
+  right: 30px;
+}
+
+#buttonDiv>.btn {
+  width: 80%;
+}
+
+#buttonDiv {
+  width: 5em;
+}
